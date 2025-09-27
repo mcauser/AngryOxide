@@ -180,7 +180,7 @@ impl UiState {
                 MenuType::AccessPoints => self.ap_sort_next(),
                 MenuType::Clients => self.cl_sort_next(),
                 MenuType::Handshakes => self.hs_sort_next(),
-                MenuType::Messages => (),
+                MenuType::Messages => self.messages_sort_next(),
             };
         }
     }
@@ -217,6 +217,53 @@ impl UiState {
             self.messages_sort += 1;
             if self.messages_sort == 2 {
                 self.messages_sort = 0;
+            }
+        }
+    }
+
+    pub fn sort_prev(&mut self) {
+        if !self.show_quit {
+            match self.current_menu {
+                MenuType::AccessPoints => self.ap_sort_prev(),
+                MenuType::Clients => self.cl_sort_prev(),
+                MenuType::Handshakes => self.hs_sort_prev(),
+                MenuType::Messages => self.messages_sort_prev(),
+            };
+        }
+    }
+
+    fn ap_sort_prev(&mut self) {
+        if !self.show_quit {
+            self.ap_sort -= 1;
+            if self.ap_sort == -1 {
+                self.ap_sort = 8;
+            }
+        }
+    }
+
+    fn cl_sort_prev(&mut self) {
+        if !self.show_quit {
+            self.sta_sort -= 1;
+            if self.sta_sort == -1 {
+                self.sta_sort = 5;
+            }
+        }
+    }
+
+    fn hs_sort_prev(&mut self) {
+        if !self.show_quit {
+            self.hs_sort -= 1;
+            if self.hs_sort == -1 {
+                self.hs_sort = 4;
+            }
+        }
+    }
+
+    fn messages_sort_prev(&mut self) {
+        if !self.show_quit {
+            self.messages_sort -= 1;
+            if self.messages_sort == -1 {
+                self.messages_sort = 2;
             }
         }
     }
@@ -465,8 +512,8 @@ fn create_keybind_popup(frame: &mut Frame<'_>, area: Rect) {
         Line::from(vec![Span::styled("", Style::default().bold())]),
         Line::from(vec![
             Span::raw("Sort Table").style(Style::new()),
-            Span::raw(repeat_dot(33)).style(Style::new()),
-            Span::styled("[e]", Style::default().reversed()),
+            Span::raw(repeat_dot(29)).style(Style::new()),
+            Span::styled("[e]/[E]", Style::default().reversed()),
         ]),
         Line::from(vec![
             Span::raw("Reverse Sorting").style(Style::new()),

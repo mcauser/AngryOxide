@@ -67,6 +67,7 @@ impl EventHandler {
                                 KeyCode::Char('q') => tx.send(EventType::Key(event)),
                                 KeyCode::Char(' ') => tx.send(EventType::Key(event)),
                                 KeyCode::Char('e') => tx.send(EventType::Key(event)),
+                                KeyCode::Char('E') => tx.send(EventType::Key(event)),
                                 KeyCode::Char('r') => tx.send(EventType::Key(event)),
                                 KeyCode::Char('n') => tx.send(EventType::Key(event)),
                                 KeyCode::Char('N') => tx.send(EventType::Key(event)),

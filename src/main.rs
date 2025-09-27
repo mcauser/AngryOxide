@@ -2953,7 +2953,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                             }
                                         }
                                         KeyCode::Char(' ') => oxide.ui_state.toggle_pause(),
-                                        KeyCode::Char('e') => oxide.ui_state.sort_next(),
+                                        KeyCode::Char('e') | KeyCode::Char('E') => {
+                                            if key.modifiers.intersects(KeyModifiers::SHIFT) {
+                                                oxide.ui_state.sort_prev();
+                                            } else {
+                                                oxide.ui_state.sort_next();
+                                            }
+                                        }
                                         KeyCode::Char('r') => oxide.ui_state.toggle_reverse(),
                                         KeyCode::Char('c') => oxide.ui_state.copy_short = true,
                                         KeyCode::Char('C') => oxide.ui_state.copy_long = true,
